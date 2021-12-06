@@ -1,7 +1,9 @@
 import { useTheme } from '@emotion/react';
-import { Grid, Paper } from '@mui/material';
+import { Grid, Paper, Switch, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
+import AirOutlinedIcon from '@mui/icons-material/AirOutlined';
+import LocalFireDepartmentOutlinedIcon from '@mui/icons-material/LocalFireDepartmentOutlined';
 
 const useStyles = makeStyles((theme) => ({
   box: {
@@ -15,18 +17,37 @@ const Controls = () => {
   const classes = useStyles();
   const theme = useTheme();
   return (
-    <Grid container spacing={1} mt={1}>
+    <Grid container spacing={1} mt={1} alignItems="center">
       <Grid item md={6} xs={6}>
         <Paper
           className={classes.box}
           style={{ background: theme.palette.custom.purple }}
-        ></Paper>
+        >
+          <LocalFireDepartmentOutlinedIcon
+            fontSize="large"
+            htmlColor={theme.palette.common.white}
+          />
+          <Switch size="large" color="primary" />
+          <Typography variant="h6" color={theme.palette.common.white}>
+            Water pump status
+          </Typography>
+        </Paper>
       </Grid>
+
       <Grid item md={6} xs={6}>
         <Paper
           className={classes.box}
           style={{ background: theme.palette.custom.orange }}
-        ></Paper>
+        >
+          <AirOutlinedIcon
+            fontSize="large"
+            htmlColor={theme.palette.common.white}
+          />
+          <Switch size="large" color="primary" />
+          <Typography variant="h6" color={theme.palette.common.white}>
+            Fan control
+          </Typography>
+        </Paper>
       </Grid>
     </Grid>
   );
