@@ -1,0 +1,69 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  // font-size: 62.5%; // 1rem = 10px
+
+  // @include respond(tab-land) {
+  //   //1rem=9px
+  //   font-size: 56.25%;
+  // }
+  // @include respond(tab-port) {
+  //   // 1rem = 8px
+  //   font-size: 50%;
+  // }
+  // @include respond(phone) {
+  //   // 1rem = 8px
+  //   font-size: 50%;
+  // }
+  // @include respond(big-scr) {
+  //   // 1rem = 12px
+  //   font-size: 75%;
+  // }
+  overflow-x: hidden;
+}
+
+body {
+  box-sizing: border-box;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// .container {
+//   @include respond(phone) {
+//     padding: 0 3rem;
+//   }
+// }
+
+// ::-moz-selection {
+//   /* Code for Firefox */
+//   background: rgba($second-clr, 0.5);
+// }
+
+// ::selection {
+//   background: rgba($second-clr, 0.5);
+// }
+
+// custom scrollbar
+
+// ::-webkit-scrollbar {
+//   width: 0.5rem;
+// }
+
+// ::-webkit-scrollbar-track {
+//   background: transparent;
+// }
+
+// ::-webkit-scrollbar-thumb {
+//   background: $med-green;
+// }
+
+// ::-webkit-scrollbar-thumb:hover {
+//   background: $dark-green;
+// }

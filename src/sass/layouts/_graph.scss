@@ -1,0 +1,16 @@
+#temp,
+#humid {
+  & text {
+    @include Josef;
+    font-weight: 800;
+    font-size: 50px !important;
+    transform: translateY(25px);
+
+    @include respond(tabport) {
+      font-size: 40px !important;
+    }
+    @include respond(tab-port) {
+      font-size: 30px !important;
+    }
+  }
+}

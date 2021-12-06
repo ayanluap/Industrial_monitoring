@@ -1,0 +1,38 @@
+// MEDIA QUERY MANAGER
+
+/*
+breakpoint argument classes-
+-phone      
+-tab-port
+-tab-land
+-[normal]
+-big-scr
+1em = 16px
+*/
+
+@mixin respond($breakpoint) {
+  @if $breakpoint==phone {
+    @media (max-width: 37.5em) {
+      @content;
+    }
+  }
+  @if $breakpoint==tab-port {
+    @media (max-width: 56.25em) {
+      @content;
+    }
+  }
+  @if $breakpoint==tab-land {
+    @media (max-width: 75em) {
+      @content;
+    }
+  }
+  @if $breakpoint==big-scr {
+    @media (min-width: 112.5em) {
+      @content;
+    }
+  }
+}
+
+@mixin Josef {
+  font-family: 'Josefin Sans', sans-serif;
+}
