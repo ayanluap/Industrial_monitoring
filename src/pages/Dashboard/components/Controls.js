@@ -32,9 +32,25 @@ const Controls = ({ initVisitors, initFire }) => {
   useEffect(() => {
     const starCountRef = ref(DB, '/logs');
     onValue(starCountRef, (snapshot) => {
-      const { visitors, fire } = snapshot.val();
+      const { visitors, fire,pump,fan } = snapshot.val();
       setVisitors(visitors);
       setFire(fire);
+      
+      if(pump===1){
+      setPumpSwitch(true);
+        setPump(1);
+      }else {
+        setPumpSwitch(false);
+        setPump(0);
+      }
+      
+      if(fan===1){
+        setFanSwitch(true);
+        setFan(1);
+      }else{
+        setFanSwitch(false);
+        setFan(0);
+      }
 
       if (visitors >= 1) {
         setFanSwitch(true);
