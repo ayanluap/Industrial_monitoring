@@ -40,10 +40,20 @@ const Controls = ({ initVisitors, initFire }) => {
         setFanSwitch(true);
         setFan(1);
       }
+      
+      if(visitors<1){
+      setFanSwitch(false);
+        setFan(0);
+      }
 
       if (fire === 0) {
         setPumpSwitch(true);
         setPump(1);
+      }
+      
+      if(fire===1){
+        setPumpSwitch(false);
+        setPump(0);
       }
     });
   }, []);
