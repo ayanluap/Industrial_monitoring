@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { theme } from './theme/Theme';
@@ -5,7 +6,6 @@ import { theme } from './theme/Theme';
 import { motion, AnimateSharedLayout, AnimatePresence } from 'framer-motion';
 import Home from './pages/Home/Home';
 import Dashboard from './pages/Dashboard/Dashboard';
-import { useEffect, useState } from 'react';
 import Loader from './layouts/Loader';
 
 const App = () => {
@@ -18,6 +18,7 @@ const App = () => {
   }, [loading]);
 
   return (
+    // <GlobalProvider>
     <ThemeProvider theme={theme}>
       <AnimateSharedLayout type="crossfade">
         <AnimatePresence>
@@ -44,6 +45,7 @@ const App = () => {
         </AnimatePresence>
       </AnimateSharedLayout>
     </ThemeProvider>
+    // </GlobalProvider>
   );
 };
 

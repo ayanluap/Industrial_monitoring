@@ -1,8 +1,11 @@
 import { useTheme } from '@emotion/react';
 import { Grid, Paper, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import GaugeChart from 'react-gauge-chart';
+
+import DB from '../../../Utils/firebase';
+import { ref, onValue } from 'firebase/database';
 
 const useStyles = makeStyles((theme) => ({
   box: {
@@ -13,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Graph = () => {
+const Graph = ({ temp, humid }) => {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -23,10 +26,21 @@ const Graph = () => {
     left: '50%',
     width: '100%',
     transform: 'translate(-50%,-50%)',
-    [theme.breakpoints.down('md')]: {
-      width: '60%',
-    },
   };
+
+  const roomTemperature = 23;
+
+  const [temperature, setTemperature] = useState(10);
+  const [humidity, setHumidity] = useState(20);
+
+  useEffect(() => {
+    const starCountRef = ref(DB, '/logs');
+    onValue(starCountRef, (snapshot) => {
+      const { temperature, humidity } = snapshot.val();
+      setTemperature(temperature);
+      setHumidity(humidity);
+    });
+  }, []);
 
   return (
     <Grid container spacing={1} mt={1} mb={2}>
@@ -49,7 +63,7 @@ const Graph = () => {
             needleColor={'#ccc'}
             needleBaseColor={'#ccc'}
             formatTextValue={(val) => `${val}℃`}
-            percent={0.24}
+            percent={temperature / 100}
           />
         </Paper>
       </Grid>
@@ -72,7 +86,7 @@ const Graph = () => {
             needleColor={'#ccc'}
             needleBaseColor={'#ccc'}
             formatTextValue={(val) => `${val}%H`}
-            percent={0.3}
+            percent={humidity / 100}
           />
         </Paper>
       </Grid>

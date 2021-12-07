@@ -1,16 +1,19 @@
-import { Alert, Container, Grid } from '@mui/material';
+import { Alert, CircularProgress, Container, Grid } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import Controls from './components/Controls';
 import Graph from './components/Graph';
 import Greetings from './components/Greetings';
 import Persons from './components/Persons';
 
+import DB from '../../Utils/firebase';
+import { ref, onValue } from 'firebase/database';
+
 const useStyles = makeStyles((theme) => ({
   crcl1: {
     position: 'fixed',
-    // background: theme.palette.primary.main,
+    background: theme.palette.primary.main,
     // background: theme.palette.primary.main,
     height: '40px',
     width: '40px',
@@ -21,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   crcl2: {
     position: 'fixed',
-    // background: theme.palette.secondary.main,
+    background: theme.palette.secondary.main,
     // background: theme.palette.grey,
     height: '40px',
     width: '40px',
@@ -39,13 +42,27 @@ const useStyles = makeStyles((theme) => ({
     left: 0,
     top: 0,
     background: theme.palette.custom.main,
-    opacity: 0.9,
+    opacity: 0.6,
     zIndex: -5,
   },
 }));
 
 const Dashboard = () => {
   const classes = useStyles();
+  const [loading, setLoading] = useState(false);
+
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    setLoading(true);
+    const starCountRef = ref(DB, '/logs');
+    onValue(starCountRef, (snapshot) => {
+      const data = snapshot.val();
+      setData(data);
+      setLoading(false);
+    });
+  }, []);
+
   return (
     <div>
       <Header />
@@ -53,19 +70,29 @@ const Dashboard = () => {
       <div className={classes.crcl2}></div>
       <div className={classes.overlay}></div>
       <Container>
-        <Grid container spacing={2}>
-          <Grid item md={8} xs={12}>
-            <Greetings />
-            <Graph />
-            <Alert variant="filled" severity="success">
-              Everything is seems to be ok - No harm
-            </Alert>
-            <Controls />
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <Grid container spacing={2}>
+            <Grid item md={8} xs={12}>
+              <Greetings />
+              <Graph />
+              {data && data.fire === 1 ? (
+                <Alert variant="filled" severity="success">
+                  Everything is seems to be ok - No harm
+                </Alert>
+              ) : (
+                <Alert variant="filled" severity="error">
+                  Detecting fire - Turning on water pump
+                </Alert>
+              )}
+              <Controls />
+            </Grid>
+            <Grid item md={4} xs={12}>
+              <Persons />
+            </Grid>
           </Grid>
-          <Grid item md={4} xs={12}>
-            <Persons />
-          </Grid>
-        </Grid>
+        )}
       </Container>
     </div>
   );

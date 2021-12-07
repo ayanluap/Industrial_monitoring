@@ -10,11 +10,22 @@ import {
   Typography,
 } from '@mui/material';
 import { Box } from '@mui/system';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+import DB from '../../../Utils/firebase';
+import { ref, onValue } from 'firebase/database';
 
 const Persons = () => {
   const theme = useTheme();
-  const [persons, setPersons] = useState(null);
+  const [persons, setPersons] = useState(0);
+
+  useEffect(() => {
+    const starCountRef = ref(DB, '/logs');
+    onValue(starCountRef, (snapshot) => {
+      const { visitors } = snapshot.val();
+      setPersons(visitors);
+    });
+  }, []);
 
   return (
     <Box mt={1}>
@@ -36,11 +47,16 @@ const Persons = () => {
         </TableBody>
       </Table>
 
-      <Box mt={1}>{persons && <> Yes</>}</Box>
+      <Box mt={3}></Box>
 
-      {!persons && (
-        <Alert variant="outlined" severity="info">
+      {persons <= 0 ? (
+        <Alert variant="filled" severity="info">
           Currently there are no people inside the room!
+        </Alert>
+      ) : (
+        <Alert variant="filled" severity="success">
+          There are {persons} {persons > 1 ? 'peoples' : 'people'} inside the
+          room!
         </Alert>
       )}
     </Box>

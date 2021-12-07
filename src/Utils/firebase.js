@@ -1,16 +1,18 @@
-import firebase from 'firebase';
+import { getDatabase } from '@firebase/database';
+import { initializeApp } from 'firebase/app';
+
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: 'AIzaSyDuvYv7NIsCGI2L5YS2oR0KNdSWiEQ-pTs',
-  authDomain: 'industry-monitoring-b6e63.firebaseapp.com',
-  databaseURL: 'https://industry-monitoring-b6e63-default-rtdb.firebaseio.com',
-  projectId: 'industry-monitoring-b6e63',
-  storageBucket: 'industry-monitoring-b6e63.appspot.com',
-  messagingSenderId: '652790217924',
-  appId: '1:652790217924:web:1b7328413e5c809e999d91',
-  measurementId: 'G-50790T3FYW',
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_DB_URL,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDING_ID,
+  appId: process.env.REACT_APP_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
+const firebase = initializeApp(firebaseConfig);
+const DB = getDatabase(firebase);
 
-firebase.initializeApp(firebaseConfig);
-
-export default firebase;
+export default DB;
